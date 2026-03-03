@@ -24,6 +24,9 @@ A modern product management dashboard built with React, TypeScript, and Tailwind
 npm install
 npm run dev
 
+email : admin@mail
+pass : admin123
+
 📌 Author
 Built by Fikri Firmansyah
 ```
