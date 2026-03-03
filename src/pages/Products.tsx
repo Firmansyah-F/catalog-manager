@@ -17,6 +17,7 @@ export default function Products() {
   const limit = 8;
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -30,12 +31,17 @@ export default function Products() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
+        setLoading(true);
+
         const res = await api.get<Product[]>(
           `/products?offset=${(page - 1) * limit}&limit=${limit}&title=${debouncedSearch}`,
         );
+
         setProducts(res.data);
       } catch (error) {
         console.error("Failed to fetch products", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -67,11 +73,21 @@ export default function Products() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
-      </div>
+      {loading ? (
+        <div className="flex justify-center items-center py-16">
+          <p className="text-gray-500 text-lg">Loading products...</p>
+        </div>
+      ) : products.length === 0 ? (
+        <div className="flex justify-center items-center py-16">
+          <p className="text-gray-500 text-lg">No products found.</p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {products.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
+      )}
 
       <Pagination page={page} setPage={setPage} />
     </>

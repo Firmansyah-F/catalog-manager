@@ -24,8 +24,12 @@ A modern product management dashboard built with React, TypeScript, and Tailwind
 npm install
 npm run dev
 
-email : admin@mail
+email : admin@mail.com
 pass : admin123
+
+## 🌍 Live Demo
+
+https://catalog-manager-firmansyah.vercel.app/
 
 📌 Author
 Built by Fikri Firmansyah
